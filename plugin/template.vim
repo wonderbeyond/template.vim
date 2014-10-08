@@ -9,7 +9,7 @@
 "   例如 main.cc 文件中会定义 main 函数, 其他 .cc 文件则未必然.
 " *先看是否有普通的静态模板, 再看是否有动态模板.
 
-if exists("g:enable_template") && g:enable_template == 1 && exists("g:template_dir")
+if exists("g:enable_template") && g:enable_template == 1
     augroup Template_Generator
         autocmd! Template_Generator
         autocmd BufNewFile * call Read_template()
@@ -18,8 +18,9 @@ else
     finish
 endif
 
-let s:common_tpl_dir  = g:template_dir . "/common"
-let s:dynamic_tpl_dir = g:template_dir . "/dynamic"
+let s:template_dir = globpath(&rtp, "templates")
+let s:common_tpl_dir  = s:template_dir . "/common"
+let s:dynamic_tpl_dir = s:template_dir . "/dynamic"
 
 function! Read_template()
     let filename = expand("%:t")
